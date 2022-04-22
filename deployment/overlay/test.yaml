@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-name
+    version: stable
+  name: app-name
+spec:
+  selector:
+    matchLabels:
+      app: app-name
+      version: stable
+  template:
+    metadata:
+      labels:
+        app: app-name
+        version: stable
+    spec:
+      containers:
+      - env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: container-image:latest
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 30
+        name: container
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: regcred
