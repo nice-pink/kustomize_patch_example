@@ -7,4 +7,9 @@ spec:
     spec:
       containers:
       - name: container
+        env:
+        - name: NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         image: container-image:latest

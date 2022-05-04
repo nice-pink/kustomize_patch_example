@@ -18,6 +18,10 @@ spec:
     spec:
       containers:
       - env:
+        - name: NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: POD_NAME
           valueFrom:
             fieldRef:
